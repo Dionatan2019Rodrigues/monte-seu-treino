@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fitness</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css">
+</head>
+<body>
+  <header>
+    <div class="px-3 py-2 text-bg-dark border-bottom">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start bg-dark">
+          <a href="/" class="d-flex align-items-left my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
+            <img src="assets/logo.png" class="d-block mx-auto mb-1" width="40" height="32" alt="Ícone">
+          </a>
+
+          <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+            <li>
+              <a href="#" class="nav-link text-secondary">
+                <img src="assets/inicio.png" class="d-block mx-auto mb-1" width="24" height="24" alt="Ícone">
+                Início
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link text-white">
+                <img src="assets/exercicios.png" class="d-block mx-auto mb-1" width="24" height="24" alt="Ícone">
+                Exercícios
+              </a>
+            </li>
+            <li>
+              <a href="#" class="nav-link text-white">
+                <img src="assets/meu-treino.png" class="d-block mx-auto mb-1" width="24" height="24" alt="Ícone">
+                Meu treino
+              </a>
+          </ul>
+        </div>
+      </div>
+  </header>
+
+  <div class="card filtros-card">
+    <div class="card-body">
+      <h5 class="card-title fw-bold">Categoria</h5>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="abdominais">
+        <label class="form-check-label" for="abdominais">Abdominais</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="bracos">
+        <label class="form-check-label" for="bracos">Braços</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="costas">
+        <label class="form-check-label" for="costas">Costas</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="panturrilhas">
+        <label class="form-check-label" for="panturrilhas">Panturrilhas</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="cardio">
+        <label class="form-check-label" for="cardio">Cardio</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="peito">
+        <label class="form-check-label" for="peito">Peito</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="pernas">
+        <label class="form-check-label" for="pernas">Pernas</label>
+      </div>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="ombros">
+        <label class="form-check-label" for="ombros">Ombros</label>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script>src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"</script>
+</body>
+</html>
