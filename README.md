@@ -1,3 +1,12 @@
+[]decidir tecnologias
+[]fazer wireframes
+[] ideias (cards com exercicios, clica pra favoritar e abre um modal pra escolher dia da semana pra por o exercicio no treino, componente de paginação, componente filtro)
+[]cadastrar um token
+[]nav com duas paginas 
+[]consumir a API e listar/filtrar e selecionar todos exercícios na 1° página
+[]página meu treino , com os favoritados(treino/dia da semana)
+[]banner pra página home
+
 # Projeto: Consumindo uma API pública
 
 > 1. Baixe este arquivo e edite o texto em formato Markdown conforme as instruções a seguir.
