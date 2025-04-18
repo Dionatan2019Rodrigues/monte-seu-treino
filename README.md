@@ -1,11 +1,11 @@
-[ ]decidir tecnologias <br>
+[x]decidir tecnologias (bootstrap e tailwind) <br>
 [x]fazer wireframes <br>
 [x] ideias (cards com exercicios, clica pra favoritar e abre um modal pra escolher dia da semana pra por o exercicio no treino, componente de paginação, componente filtro) <br>
+[x]nav com duas paginas <br>
+[ ]banner pra página home <br>
 [ ]cadastrar um token <br>
-[ ]nav com duas paginas <br>
 [ ]consumir a API e listar/filtrar e selecionar todos exercícios na 1° página <br>
 [ ]página meu treino , com os favoritados(treino/dia da semana) <br>
-[ ]banner pra página home <br>
 
 # Projeto: Consumindo uma API pública
 
