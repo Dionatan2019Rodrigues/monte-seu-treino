@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fitness</title>
-    <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon" />
     <link rel="stylesheet" href="style.css" />
     <!-- Include the Bootstrap in the project -->
     <link
@@ -16,7 +16,7 @@
     <header>
       <div class="px-3 py-2 text-bg-dark border-bottom">
         <div
-          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start bg-dark"
+          class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between justify-content-lg-start bg-dark px-lg-5"
         >
           <a
             href="/"
@@ -31,7 +31,7 @@
             />
           </a>
           <ul
-            class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small"
+            class="nav col-12 col-md-auto my-2 justify-content-between my-md-0 text-small"
           >
             <li>
               <a href="#" class="nav-link text-secondary">
@@ -46,7 +46,7 @@
               </a>
             </li>
             <li>
-              <a href="#" class="nav-link text-white">
+              <a href="#exercise" class="nav-link text-white">
                 <img
                   src="assets/exercicios.png"
                   class="d-block mx-auto mb-1"
@@ -87,45 +87,51 @@
       <!-- Exercises -->
       <section id="exercise">
         <!-- Filtro -->
-    <div class="card filtros-card">
-      <div class="card-body">
-        <h5 class="card-title fw-bold">Categoria</h5>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="abdominais" />
-          <label class="form-check-label" for="abdominais">Abdominais</label>
+        <div class="card filtros-card">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">Categoria</h5>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="abdominais" />
+              <label class="form-check-label" for="abdominais"
+                >Abdominais</label
+              >
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="bracos" />
+              <label class="form-check-label" for="bracos">Braços</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="costas" />
+              <label class="form-check-label" for="costas">Costas</label>
+            </div>
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="panturrilhas"
+              />
+              <label class="form-check-label" for="panturrilhas"
+                >Panturrilhas</label
+              >
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="cardio" />
+              <label class="form-check-label" for="cardio">Cardio</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="peito" />
+              <label class="form-check-label" for="peito">Peito</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="pernas" />
+              <label class="form-check-label" for="pernas">Pernas</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="ombros" />
+              <label class="form-check-label" for="ombros">Ombros</label>
+            </div>
+          </div>
         </div>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="bracos" />
-          <label class="form-check-label" for="bracos">Braços</label>
-        </div>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="costas" />
-          <label class="form-check-label" for="costas">Costas</label>
-        </div>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="panturrilhas" />
-          <label class="form-check-label" for="panturrilhas"
-            >Panturrilhas</label
-          >
-        </div>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="cardio" />
-          <label class="form-check-label" for="cardio">Cardio</label>
-        </div>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="peito" />
-          <label class="form-check-label" for="peito">Peito</label>
-        </div>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="pernas" />
-          <label class="form-check-label" for="pernas">Pernas</label>
-        </div>
-        <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="ombros" />
-          <label class="form-check-label" for="ombros">Ombros</label>
-        </div>
-      </div>
-    </div>
       </section>
     </main>
 
