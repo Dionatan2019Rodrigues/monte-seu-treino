@@ -3,8 +3,12 @@
 [x] ideias (cards com exercicios, clica pra favoritar e abre um modal pra escolher dia da semana pra por o exercicio no treino, componente de paginação, componente filtro) <br>
 [x]nav com duas paginas <br>
 [x]banner pra página home <br>
-[ ]cadastrar um token <br>
-[ ]consumir a API e listar/filtrar e selecionar todos exercícios na 1° página <br>
+[não-foi-necessário]cadastrar um token <br>
+[x]consumir a API
+[x]listar todos exercícios na 1° página <br>
+[ ]filtrar todos exercícios na 1° página <br>
+[ ]selecionar todos exercícios na 1° página <br>
+[ ]front end dos cards de exercícios<br>
 [ ]página meu treino , com os favoritados(treino/dia da semana) <br>
 
 # Projeto: Consumindo uma API pública
