@@ -4,14 +4,14 @@ const container = document.getElementById("cards-container");
 
 // Busca os exercícios
 async function fetchExercises() {
-  const res = await fetch(`${API_BASE}/exerciseinfo/?language=2&limit=100`);
+  const res = await fetch(`${API_BASE}/exerciseinfo/?language=2&limit=6`);
   const data = await res.json();
   return data.results;
 }
 
 // Busca as imagens de exercícios
 async function fetchExerciseImages() {
-  const res = await fetch(`${API_BASE}/exerciseimage/?limit=100`);
+  const res = await fetch(`${API_BASE}/exerciseimage/?limit=6`);
   const data = await res.json();
   return data.results;
 }
