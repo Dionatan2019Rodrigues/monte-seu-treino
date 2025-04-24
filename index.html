@@ -13,6 +13,8 @@
     />
     <!-- Include the Tailwind in the project -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Include the Font Awesome in the project -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   </head>
   <body>
     <header>
@@ -93,7 +95,7 @@
       <!-- Filtro , Search and Exercises -->
       <section id="exercise" class="grid grid-cols-12 gap-4 bg-white p-4">
         <!-- Filtros -->
-        <div class="col-span-3 text-left">
+        <aside class="col-span-3 text-left">
           <div class="card filtros-card h-100">
             <div class="card-body">
               <h5 class="card-title fw-bold">Categoria</h5>
@@ -143,7 +145,8 @@
               </div>
             </div>
           </div>
-        </div>
+        </aside>
+        <!-- Search and Exercises -->
         <div class="col-span-9 text-lef">
           <!-- Search -->
           <div class="row mb-4 justify-content-start ml-1">
@@ -184,7 +187,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="modalTreinoLabel">
-                Adicionar exercício ao treino
+                Favoritar exercício
               </h5>
               <button
                 type="button"
@@ -195,7 +198,7 @@
             </div>
 
             <div class="modal-body">
-              <p class="mb-2">Escolha em qual treino você deseja adicionar o exercício:</p>
+              <p class="mb-2">Escolha em qual treino você deseja favoritar o exercício:</p>
 
               <div class="mb-3">
                 <select class="form-select" id="treinoSelect">
@@ -225,7 +228,7 @@
                 class="btn btn-success"
                 onclick="adicionarAoTreino()"
               >
-                Adicionar
+                Favoritar
               </button>
               <!--fazer a funcao depois-->
             </div>
@@ -234,11 +237,7 @@
       </section>
     </main>
     <script src="app.js"></script>
-    <!-- TODO: Why there is this line below ? -->
-    <script>
-      src =
-        "https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js";
-    </script>
+    <!-- Required to open modal -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
