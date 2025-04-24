@@ -14,10 +14,13 @@
     <!-- Include the Tailwind in the project -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Include the Font Awesome in the project -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
   </head>
   <body>
-    <header>
+    <header id="header">
       <div class="px-3 py-2 text-bg-dark border-bottom">
         <div
           class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between justify-content-lg-start bg-dark px-lg-5"
@@ -198,7 +201,9 @@
             </div>
 
             <div class="modal-body">
-              <p class="mb-2">Escolha em qual treino você deseja favoritar o exercício:</p>
+              <p class="mb-2">
+                Escolha em qual treino você deseja favoritar o exercício:
+              </p>
 
               <div class="mb-3">
                 <select class="form-select" id="treinoSelect">
@@ -236,6 +241,30 @@
         </div>
       </section>
     </main>
+
+    <footer
+      class="flex justify-between items-center px-9 py-6 border-t border-gray-400 md:px-20 lg:px-32"
+    >
+      <p class="text-small font-bold text-gray-300">
+        &copy; Desenvolvido por
+        <a
+          href="https://dionatan-portfolio.vercel.app/"
+          class="hover:text-gray-500 hover:cursor-pointer"
+          target="_blank"
+          >Dionatan Rodrigues</a
+        >
+        e
+        <a href="#" class="hover:text-gray-500 hover:cursor-pointer"
+          >Leonardo</a
+        >
+      </p>
+      <div class="flex items-center gap-2 text-xl">
+        <a href="#header" class="bg-gray-300 px-2 rounded hover:bg-gray-400">
+          <i class="fa-solid fa-arrow-up"></i>
+        </a>
+      </div>
+    </footer>
+
     <script src="app.js"></script>
     <!-- Required to open modal -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
