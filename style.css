@@ -19,6 +19,8 @@
 }
 
 .filtros-card {
+  max-width: 300px;
+  margin: 4rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
@@ -58,30 +60,56 @@ button.fav-btn:hover {
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-  background-color: black;
-  border-radius: 50%;
-  padding: 10px; /* mudar esses botoes (nao consegui deixar preto)*/
-  filter: invert(0%);
+  background-color: black; 
+  border-radius: 50%;       
+  padding: 10px;    /* mudar esses botoes (nao consegui deixar preto)*/
+  filter: invert(0%); 
+       
 }
+
 /* Ajustando os botões */
 .carousel-controls {
   position: relative;
   display: flex;
   justify-content: space-between; /* espacamento entre os botões */
-  top: 50px;
+  top: 50px; 
   width: 100%;
 }
+
 .carousel-control-prev,
 .carousel-control-next {
-  position: relative;
-  width: 50px;
-  height: 50px;
+  position: relative; 
+  width: 50px;       
+  height: 50px;       
 }
+
 .carousel-control-prev {
   margin-left: -11%;
   margin-top: 4%;
 }
+
 .carousel-control-next {
   margin-top: 4%;
   margin-right: -11%;
+}
+
+.loading {
+  display: none; /* esconde por padrão */
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #f05a28; 
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1rem; 
+  animation: girar 1s linear infinite;
+}
+
+@keyframes girar { /* usado chatGPT nessa parte*/
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
