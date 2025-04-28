@@ -6,9 +6,11 @@
 [não-foi-necessário]cadastrar um token <br>
 [x]consumir a API
 [x]listar todos exercícios na 1° página <br>
-[ ]filtrar todos exercícios na 1° página <br>
-[ ]selecionar todos exercícios na 1° página <br>
-[ ]front end dos cards de exercícios<br>
+[x]filtrar todos exercícios na 1° página <br>
+[x]selecionar todos exercícios na 1° página <br>
+[x]front end dos cards de exercícios<br>
+[x]Loader de carregamento dos exercícios<br>
+[x]Páginação de exercícios<br>
 [ ]página meu treino , com os favoritados(treino/dia da semana) <br>
 
 # Projeto: Consumindo uma API pública
