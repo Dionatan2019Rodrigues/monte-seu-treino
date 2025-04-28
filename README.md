@@ -1,71 +1,50 @@
-[x]decidir tecnologias (bootstrap e tailwind) <br>
-[x]fazer wireframes <br>
-[x] ideias (cards com exercicios, clica pra favoritar e abre um modal pra escolher dia da semana pra por o exercicio no treino, componente de paginação, componente filtro) <br>
-[x]nav com duas paginas <br>
-[x]banner pra página home <br>
-[não-foi-necessário]cadastrar um token <br>
-[x]consumir a API
-[x]listar todos exercícios na 1° página <br>
-[x]filtrar todos exercícios na 1° página <br>
-[x]selecionar todos exercícios na 1° página <br>
-[x]front end dos cards de exercícios<br>
-[x]Loader de carregamento dos exercícios<br>
-[x]Páginação de exercícios<br>
-[ ]página meu treino , com os favoritados(treino/dia da semana) <br>
+## Consumindo API pública (Wger)
 
-# Projeto: Consumindo uma API pública
+### Imagem do projeto
+<img src="images/full-version.png"/>
+Navegando através da raiz deste repositório pelo seguinte caminho (./images) você encontra o print da paǵina inteira do site tanto na versão desktop  como na versão mobile também.
 
-> 1. Baixe este arquivo e edite o texto em formato Markdown conforme as instruções a seguir.
-> 2. Substitua todos os trechos de texto iniciados com "Substitua" por informações do seu projeto, conforme solicitado em cada trecho.
-> 3. Substitua a imagem por um screenshot do projeto (arquivo pode ser armazenado no repositório ou em URL externa). GIFs animados também são permitidos!
-> 4. Remova todas as instruções de entrega.
-> 5. Double-check: Certifique-se de que seu README.md não contenha instruções de entrega!
-> 6. Entregue este README.md dentro da pasta raiz do repositório de entrega.
-> Opcional: é permitido alterar a formatação do README, desde que sejam mantidas todas as informações solicitadas (tudo bem adicionar mais informações)
+#### Acesso
+[api.monte-seu-treino.com](https://elc1090.github.io/project2-2025a-dionatan-leonardo/)
 
-![Substitua a imagem ao lado por um screenshot do seu projeto](https://mdswanson.com/static/chops-ux-step-4.png "Screenshot do projeto")
-
-
-Acesso: Substitua este texto pela URL de deploy do projeto
-Testando commits
-
-### Desenvolvedores
+#### Desenvolvedores
 Dionatan Eduardo Correa Rodrigues - Ciência da Computação<br>
-Leonardo ... - ...
+Leonardo Balk - Sistemas de Informação
 
 
-### Nosso produto
+#### Nosso produto
 
-Substitua este texto por uma descrição do que foi produzido: funcionalidades e relação com a temática "Conhecimento"
+Desenvolvemos uma plataforma digital para gerenciamento de exercícios físicos permitindo aos usuários explorar e organizar seus treinos de forma eficiente. O sistema oferece um catálogo completo de exercícios, consumido através da API [wger.de](https://wger.de/api/v2/), com funcionalidades de busca por nome e filtragem por grupos musculares (como abdominais, braços ou cardio), além de paginação para facilitar a navegação. 
 
 
+#### Desenvolvimento
 
-### Desenvolvimento
-
-Substitua este texto por uma descrição do processo de desenvolvimento, explicando decisões tomadas e etapas do trabalho.
-
+O processo de desenvolvimento priorizou a criação de uma solução robusta e fácil de manter, seguindo uma abordagem modular. Iniciamos pela estruturação do frontend com HTML semântico e Bootstrap 5, assegurando compatibilidade com diferentes dispositivos, e a integração com a API [wger.de](https://wger.de/api/v2/) foi fundamental para obter dados confiáveis de exercícios.
 
 #### Tecnologias
 
-Substitua este trecho por uma lista detalhada de tecnologias usadas (tanto as básicas, como HTML e CSS, como as mais específicas, por exemplo algum framework para frontend, etc.):
-- ...
-- ...
-- 
+- **HTML**: Estruturação do site.
+- **CSS**: Estilizações expecíficas do projeto.
+- **Bootstrap**: Utilizado para uso de classes estilisadas.
+- **Javascript**: Utilizado para fazer a requisição da API do Wger e as manipulações de eventos no sistema.
+- **FontAwesome**: Ícones estilizados e de fácil implementação.
+- **Git**: Utilizado no versionamento de todo projeto.
 
 #### Ambiente de desenvolvimento
 
-Substitua este trecho por uma lista detalhada dos ambientes/ferramentas de desenvolvimento utilizadas (por exemplo, VS Code + alguma extensão, etc.)
-- ...
-- ...
+- **VS Code + extenções**: IDE utilizada no desenvolvimento com auxílio de algumas extensões.
+- **(extensão)Live Server**: Tem a funcionalidade de gerar um servidor local e auto recarregável.
+- **(extensão)Prettier Code formatter**: Formatador de código fornecendo um padrão estabelecido.
+- **(extensão)Gitmoji**: Auxilia na padronização de commits.
+- **(extensão)Auto Rename tag**: Renomeia a tag de fechamento HTML simultaneamente a escrita da tag de abertura.
+- **(extensão)Markdown Preview Github Styling**: Cria uma segunda aba dentro do VSCODE para a vizualização do README durante a criação facilitando o desenvolvimento do mesmo.
 
 #### Referências e créditos
 
-Substitua este trecho por uma lista bem detalhada de todo material consultado para ajudar no projeto, por exemplo:  URL de templates usados, URL de icon kits usados, créditos para colegas que colaboraram, geradores de código (incluindo alguns prompts usados para o ChatGPT, se for o caso)
-- ...
-- ...
-
-
-
+- Documentação [Bootstrap](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
+- Biblioteca de ícones [Font Awesome](https://fontawesome.com/search)
+- [Canva](https://www.canva.com/) para construção do banner.
+- GoFullPage - Full Page Screen Capture: Extensão do google utilizada para tirar print do site inteiro e colocar no README.
 
 ---
 Projeto entregue para a disciplina de [Desenvolvimento de Software para a Web](http://github.com/andreainfufsm/elc1090-2025a) em 2025a
