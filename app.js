@@ -6,6 +6,7 @@ const paginacao = document.getElementById("paginacao");
 const paginaTexto = document.getElementById("pagina-atual");
 const searchForm = document.querySelector('form[role="search"]');
 const searchInput = document.querySelector('input[type="search"]');
+document.getElementById('btnFavoritar').addEventListener('click', adicionarAoTreino);
 
 // controle de paginacao
 let paginaAtual = 1;
@@ -150,7 +151,7 @@ function createCard(exercise, imageUrl) {
   return `
     <div class="col">
       <div class="card h-100">
-      <div class="card-body">
+        <div class="card-body">
           <span class="badge bg-dark mb-2 p-2">${translateCategory(
             exercise.category.name
           )}</span>
@@ -163,10 +164,16 @@ function createCard(exercise, imageUrl) {
           <h5 class="card-title pt-3 mb-1">${
             translation.name || "Sem nome."
           }</h5>
-          <button class="btn btn-success px-6 w-100" type="button" data-bs-toggle="modal" data-bs-target="#modalTreino">
+          <button 
+            class="btn btn-success px-6 w-100" 
+            type="button" 
+            data-bs-toggle="modal" 
+            data-bs-target="#modalTreino"
+            onclick="favoritarModal(${exercise.id})"
+          >
             <i class="fa-regular fa-star"></i>
           </button>
-        </img>
+        </div>
       </div>
     </div>
   `;
@@ -228,17 +235,22 @@ showCards();
 // Funções de Favoritar
 function favoritarModal(id) {
   exercicioSelecionado = exerciciosAtuais.find((ex) => ex.id === id);
-
+  
   if (!exercicioSelecionado) {
     console.error("Exercício não encontrado!");
     return;
   }
-
+  
   const modal = new bootstrap.Modal(document.getElementById("modalTreino"));
   modal.show();
 }
 
 function adicionarAoTreino() {
+  if (!exercicioSelecionado) {
+    alert("Nenhum exercício selecionado!");
+    return;
+  }
+
   const select = document.getElementById("treinoSelect");
   const treinoSelecionado = select.value;
 
@@ -257,27 +269,28 @@ function adicionarAoTreino() {
   const jaExiste = treinos[treinoSelecionado].some(
     (ex) => ex.id === exercicioSelecionado.id
   );
+  
   if (jaExiste) {
     alert("Este exercício já foi adicionado a esse treino!");
-    return;
+  } else {
+    const novoExercicio = {
+      id: exercicioSelecionado.id,
+      nome:
+        exercicioSelecionado.translations?.find((t) => t.language === 2)?.name ||
+        exercicioSelecionado.name,
+      imagem: exercicioSelecionado.images?.[0]?.image || "assets/sem-imagem.png",
+    };
+
+    treinos[treinoSelecionado].push(novoExercicio);
+    localStorage.setItem("meusTreinos", JSON.stringify(treinos));
+    alert("Exercício adicionado com sucesso!");
   }
 
-  const novoExercicio = {
-    id: exercicioSelecionado.id,
-    nome:
-      exercicioSelecionado.translations?.find((t) => t.language === 2)?.name ||
-      exercicioSelecionado.name,
-    imagem: exercicioSelecionado.images?.[0]?.image || "assets/sem-imagem.png",
-  };
-
-  treinos[treinoSelecionado].push(novoExercicio);
-
-  localStorage.setItem("meusTreinos", JSON.stringify(treinos));
-
-  alert("Exercício adicionado com sucesso!");
-
-  const modal = bootstrap.Modal.getInstance(
-    document.getElementById("modalTreino")
-  );
+  // Fecha o modal corretamente
+  const modal = bootstrap.Modal.getInstance(document.getElementById('modalTreino'));
   modal.hide();
+  
+  // Limpa a seleção
+  select.value = "";
+  exercicioSelecionado = null;
 }
