@@ -10,7 +10,7 @@ const searchInput = document.querySelector('input[type="search"]');
 // controle de paginacao
 let paginaAtual = 1;
 const itensPorPagina = 12;
-let searchTerm = '';
+let searchTerm = "";
 let allExercisesCache = [];
 let exerciciosAtuais = [];
 let exercicioSelecionado = null;
@@ -54,7 +54,7 @@ document.querySelectorAll(".form-check-input").forEach((checkbox) => {
   });
 });
 
-searchForm.addEventListener("submit", function(e) {
+searchForm.addEventListener("submit", function (e) {
   e.preventDefault();
   searchTerm = searchInput.value.trim().toLowerCase();
   paginaAtual = 1;
@@ -124,9 +124,10 @@ async function fetchExerciseImages() {
 function filterExercisesByName(exercises, searchTerm) {
   if (!searchTerm) return exercises;
 
-  return exercises.filter(exercise => {
-    const translation = exercise.translations?.find(t => t.language === 2) || {};
-    const translatedName = translation.name?.toLowerCase() || '';
+  return exercises.filter((exercise) => {
+    const translation =
+      exercise.translations?.find((t) => t.language === 2) || {};
+    const translatedName = translation.name?.toLowerCase() || "";
     return translatedName.includes(searchTerm);
   });
 }
@@ -138,25 +139,34 @@ function applyCategoryFilters(exercises) {
 
   if (activeCategoryIds.length === 0) return exercises;
 
-  return exercises.filter(exercise => 
+  return exercises.filter((exercise) =>
     activeCategoryIds.includes(exercise.category.id)
   );
 }
 
 function createCard(exercise, imageUrl) {
-  const translation = exercise.translations?.find(t => t.language === 2) || {};
+  const translation =
+    exercise.translations?.find((t) => t.language === 2) || {};
   return `
     <div class="col">
       <div class="card h-100">
       <div class="card-body">
-          <span class="badge bg-dark mb-2 p-2">${translateCategory(exercise.category.name)}</span>
-          <img src="${imageUrl || "assets/sem-imagem.png"}" class="card-img-top" style="height:150px; width:250px;" 
-            alt="${translateCategory(exercise.category.name)}">
-          <h5 class="card-title pt-3 mb-1">${translation.name || "Sem nome."}</h5>
+          <span class="badge bg-dark mb-2 p-2">${translateCategory(
+            exercise.category.name
+          )}</span>
+          <img 
+            class="card-img-top h-[150px] w-[250px] object-cover object-center"
+            src="${imageUrl || "assets/sem-imagem.png"}"
+            onerror="this.src='assets/sem-imagem.png'"
+            alt="${translateCategory(exercise.category.name)}"
+          >
+          <h5 class="card-title pt-3 mb-1">${
+            translation.name || "Sem nome."
+          }</h5>
           <button class="btn btn-success px-6 w-100" type="button" data-bs-toggle="modal" data-bs-target="#modalTreino">
             <i class="fa-regular fa-star"></i>
           </button>
-        </div>
+        </img>
       </div>
     </div>
   `;
@@ -181,7 +191,8 @@ async function showCards() {
     exerciciosAtuais = exercisesToShow;
 
     if (exercisesToShow.length === 0) {
-      container.innerHTML = '<div class="col-12"><p class="text-center">Nenhum exercício encontrado com os critérios selecionados.</p></div>';
+      container.innerHTML =
+        '<div class="col-12"><p class="text-center">Nenhum exercício encontrado com os critérios selecionados.</p></div>';
     } else {
       exercisesToShow.forEach((exercise) => {
         const image = images.find((img) => img.exercise === exercise.id);
@@ -194,7 +205,8 @@ async function showCards() {
     paginaTexto.textContent = `Página ${paginaAtual}`;
   } catch (error) {
     console.error("Erro ao carregar exercícios:", error);
-    container.innerHTML = '<div class="col-12"><p class="text-center">Ocorreu um erro ao carregar os exercícios.</p></div>';
+    container.innerHTML =
+      '<div class="col-12"><p class="text-center">Ocorreu um erro ao carregar os exercícios.</p></div>';
     loading.style.display = "none";
   }
 }
@@ -215,51 +227,57 @@ showCards();
 
 // Funções de Favoritar
 function favoritarModal(id) {
-  exercicioSelecionado = exerciciosAtuais.find(ex => ex.id === id);
+  exercicioSelecionado = exerciciosAtuais.find((ex) => ex.id === id);
 
   if (!exercicioSelecionado) {
-    console.error('Exercício não encontrado!');
+    console.error("Exercício não encontrado!");
     return;
   }
 
-  const modal = new bootstrap.Modal(document.getElementById('modalTreino'));
+  const modal = new bootstrap.Modal(document.getElementById("modalTreino"));
   modal.show();
 }
 
 function adicionarAoTreino() {
-  const select = document.getElementById('treinoSelect');
+  const select = document.getElementById("treinoSelect");
   const treinoSelecionado = select.value;
 
   if (!treinoSelecionado) {
-    alert('Selecione um treino!');
+    alert("Selecione um treino!");
     return;
   }
 
-  let treinos = localStorage.getItem('meusTreinos');
+  let treinos = localStorage.getItem("meusTreinos");
   treinos = treinos ? JSON.parse(treinos) : {};
 
   if (!treinos[treinoSelecionado]) {
     treinos[treinoSelecionado] = [];
   }
 
-  const jaExiste = treinos[treinoSelecionado].some(ex => ex.id === exercicioSelecionado.id);
+  const jaExiste = treinos[treinoSelecionado].some(
+    (ex) => ex.id === exercicioSelecionado.id
+  );
   if (jaExiste) {
-    alert('Este exercício já foi adicionado a esse treino!');
+    alert("Este exercício já foi adicionado a esse treino!");
     return;
   }
 
   const novoExercicio = {
     id: exercicioSelecionado.id,
-    nome: exercicioSelecionado.translations?.find(t => t.language === 2)?.name || exercicioSelecionado.name,
-    imagem: exercicioSelecionado.images?.[0]?.image || "assets/sem-imagem.png"
+    nome:
+      exercicioSelecionado.translations?.find((t) => t.language === 2)?.name ||
+      exercicioSelecionado.name,
+    imagem: exercicioSelecionado.images?.[0]?.image || "assets/sem-imagem.png",
   };
 
   treinos[treinoSelecionado].push(novoExercicio);
 
-  localStorage.setItem('meusTreinos', JSON.stringify(treinos));
+  localStorage.setItem("meusTreinos", JSON.stringify(treinos));
 
-  alert('Exercício adicionado com sucesso!');
+  alert("Exercício adicionado com sucesso!");
 
-  const modal = bootstrap.Modal.getInstance(document.getElementById('modalTreino'));
+  const modal = bootstrap.Modal.getInstance(
+    document.getElementById("modalTreino")
+  );
   modal.hide();
 }
