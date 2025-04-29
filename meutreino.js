@@ -1,4 +1,3 @@
-// meutreino.js
 const favoritosContainer = document.getElementById("favoritos-container");
 
 // Função para carregar os exercícios favoritos
@@ -31,7 +30,7 @@ function carregarFavoritos() {
 // Função para criar o HTML do card
 function createCard(exercicio, treinoNome) {
   return `
-    <div class="col-md-3 mb-4">
+    <div class="col-md-4 col-lg-3 mb-4">
       <div class="card h-100">
         <img src="${exercicio.imagem}" class="card-img-top h-[150px] w-[100] object-cover object-center"onerror="this.src='assets/sem-imagem.png'" alt="${exercicio.nome}">
         <div class="card-body d-flex flex-column">
@@ -65,7 +64,6 @@ function removerExercicio(id, treinoNome) {
 
 // Carregar favoritos ao carregar a página
 document.addEventListener("DOMContentLoaded", carregarFavoritos);
-
 
 function showNoFavoritesAnimation() {
   return `
