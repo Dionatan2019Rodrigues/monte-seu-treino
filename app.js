@@ -9,7 +9,7 @@ const searchInput = document.querySelector('input[type="search"]');
 
 // controle de paginacao
 let paginaAtual = 1;
-const itensPorPagina = 20;
+const itensPorPagina = 15;
 let searchTerm = '';
 let allExercisesCache = [];
 let exerciciosAtuais = [];
@@ -148,17 +148,12 @@ function createCard(exercise, imageUrl) {
   return `
     <div class="col">
       <div class="card h-100">
-        <img src="${imageUrl || "assets/sem-imagem.png"}" class="card-img-top" alt="${translation.name || 'Exercício'}">
-        <div class="card-body">
-          <span class="badge bg-dark mb-2">${translateCategory(exercise.category.name)}</span>
-          <h5 class="card-title">${translation.name || "Sem nome."}</h5>
-          <button 
-            class="btn btn-success px-6" 
-            type="button" 
-            data-bs-toggle="modal" 
-            data-bs-target="#modalTreino"
-            onclick="favoritarModal(${exercise.id})"
-          >
+      <div class="card-body">
+          <span class="badge bg-dark mb-2 p-2">${translateCategory(exercise.category.name)}</span>
+          <img src="${imageUrl || "assets/sem-imagem.png"}" class="card-img-top" style="height:150px; width:250px;" 
+            alt="${translateCategory(exercise.category.name)}">
+          <h5 class="card-title pt-3 mb-1">${translation.name || "Sem nome."}</h5>
+          <button class="btn btn-success px-6 w-100" type="button" data-bs-toggle="modal" data-bs-target="#modalTreino">
             <i class="fa-regular fa-star"></i>
           </button>
         </div>
