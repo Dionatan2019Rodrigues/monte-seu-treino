@@ -11,11 +11,13 @@ const searchInput = document.querySelector('input[type="search"]');
 let paginaAtual = 1;
 const itensPorPagina = 20;
 let searchTerm = '';
-let allExercisesCache = []; // Cache para todos os exercícios
+let allExercisesCache = [];
+let exerciciosAtuais = [];
+let exercicioSelecionado = null;
 
 // mapeamento de categorias traduzidas
 const categoryMap = {
-  abdominais: 10, // IDs reais das categorias na API
+  abdominais: 10,
   bracos: 8,
   costas: 12,
   panturrilhas: 14,
@@ -43,7 +45,6 @@ function translateCategory(categoryName) {
 // Objeto para armazenar os filtros ativos
 let activeFilters = {};
 
-// Adiciona eventos aos checkboxes de filtro
 document.querySelectorAll(".form-check-input").forEach((checkbox) => {
   checkbox.addEventListener("change", function () {
     const filterId = this.id;
@@ -53,13 +54,11 @@ document.querySelectorAll(".form-check-input").forEach((checkbox) => {
   });
 });
 
-// Adiciona evento ao formulário de busca
 searchForm.addEventListener("submit", function(e) {
   e.preventDefault();
   searchTerm = searchInput.value.trim().toLowerCase();
   paginaAtual = 1;
-  
-  // Se há termo de busca, carrega todos os exercícios
+
   if (searchTerm) {
     loadAllExercises().then(() => showCards());
   } else {
@@ -67,23 +66,21 @@ searchForm.addEventListener("submit", function(e) {
   }
 });
 
-// Carrega TODOS os exercícios (ignorando paginação)
 async function loadAllExercises() {
   loading.style.display = "block";
   container.innerHTML = "";
-  
+
   try {
     let allExercises = [];
     let nextUrl = `${API_BASE}/exerciseinfo/?language=7&limit=100`;
-    
-    // Faz requisições paginadas até obter todos os exercícios
+
     while (nextUrl) {
       const res = await fetch(nextUrl);
       const data = await res.json();
       allExercises = allExercises.concat(data.results);
       nextUrl = data.next;
     }
-    
+
     allExercisesCache = allExercises;
     return allExercises;
   } catch (error) {
@@ -92,12 +89,10 @@ async function loadAllExercises() {
   }
 }
 
-// busca os exercicios com filtros aplicados (paginação normal)
 async function fetchExercises() {
   const offset = (paginaAtual - 1) * itensPorPagina;
   let url = `${API_BASE}/exerciseinfo/?language=7&limit=${itensPorPagina}&offset=${offset}`;
 
-  // Verifica se há filtros ativos
   const activeCategoryIds = Object.entries(activeFilters)
     .filter(([_, isActive]) => isActive)
     .map(([category, _]) => categoryMap[category]);
@@ -120,17 +115,15 @@ async function fetchExercises() {
   return data.results;
 }
 
-// busca as imagens dos exercicios
 async function fetchExerciseImages() {
   const res = await fetch(`${API_BASE}/exerciseimage/?limit=200`);
   const data = await res.json();
   return data.results;
 }
 
-// filtra os exercícios APENAS pelo nome (ignorando descrição)
 function filterExercisesByName(exercises, searchTerm) {
   if (!searchTerm) return exercises;
-  
+
   return exercises.filter(exercise => {
     const translation = exercise.translations?.find(t => t.language === 2) || {};
     const translatedName = translation.name?.toLowerCase() || '';
@@ -138,7 +131,6 @@ function filterExercisesByName(exercises, searchTerm) {
   });
 }
 
-// aplica filtros de categoria
 function applyCategoryFilters(exercises) {
   const activeCategoryIds = Object.entries(activeFilters)
     .filter(([_, isActive]) => isActive)
@@ -151,7 +143,6 @@ function applyCategoryFilters(exercises) {
   );
 }
 
-// cria o html do card
 function createCard(exercise, imageUrl) {
   const translation = exercise.translations?.find(t => t.language === 2) || {};
   return `
@@ -161,7 +152,13 @@ function createCard(exercise, imageUrl) {
         <div class="card-body">
           <span class="badge bg-dark mb-2">${translateCategory(exercise.category.name)}</span>
           <h5 class="card-title">${translation.name || "Sem nome."}</h5>
-          <button class="btn btn-success px-6" type="button" data-bs-toggle="modal" data-bs-target="#modalTreino">
+          <button 
+            class="btn btn-success px-6" 
+            type="button" 
+            data-bs-toggle="modal" 
+            data-bs-target="#modalTreino"
+            onclick="favoritarModal(${exercise.id})"
+          >
             <i class="fa-regular fa-star"></i>
           </button>
         </div>
@@ -170,7 +167,6 @@ function createCard(exercise, imageUrl) {
   `;
 }
 
-// exibe os cards dos exercicios
 async function showCards() {
   loading.style.display = "block";
   container.innerHTML = "";
@@ -181,13 +177,13 @@ async function showCards() {
     const images = await fetchExerciseImages();
 
     if (searchTerm) {
-      // Usa o cache de todos os exercícios para busca
       exercisesToShow = filterExercisesByName(allExercisesCache, searchTerm);
       exercisesToShow = applyCategoryFilters(exercisesToShow);
     } else {
-      // Modo normal com paginação
       exercisesToShow = await fetchExercises();
     }
+
+    exerciciosAtuais = exercisesToShow;
 
     if (exercisesToShow.length === 0) {
       container.innerHTML = '<div class="col-12"><p class="text-center">Nenhum exercício encontrado com os critérios selecionados.</p></div>';
@@ -199,7 +195,6 @@ async function showCards() {
     }
 
     loading.style.display = "none";
-    // Mostra paginação apenas quando não está em modo de busca
     paginacao.style.display = searchTerm ? "none" : "block";
     paginaTexto.textContent = `Página ${paginaAtual}`;
   } catch (error) {
@@ -209,7 +204,6 @@ async function showCards() {
   }
 }
 
-// botoes de paginacao
 document.getElementById("anterior").addEventListener("click", () => {
   if (paginaAtual > 1) {
     paginaAtual--;
@@ -222,5 +216,55 @@ document.getElementById("proximo").addEventListener("click", () => {
   showCards();
 });
 
-// Carrega alguns exercícios inicialmente
 showCards();
+
+// Funções de Favoritar
+function favoritarModal(id) {
+  exercicioSelecionado = exerciciosAtuais.find(ex => ex.id === id);
+
+  if (!exercicioSelecionado) {
+    console.error('Exercício não encontrado!');
+    return;
+  }
+
+  const modal = new bootstrap.Modal(document.getElementById('modalTreino'));
+  modal.show();
+}
+
+function adicionarAoTreino() {
+  const select = document.getElementById('treinoSelect');
+  const treinoSelecionado = select.value;
+
+  if (!treinoSelecionado) {
+    alert('Selecione um treino!');
+    return;
+  }
+
+  let treinos = localStorage.getItem('meusTreinos');
+  treinos = treinos ? JSON.parse(treinos) : {};
+
+  if (!treinos[treinoSelecionado]) {
+    treinos[treinoSelecionado] = [];
+  }
+
+  const jaExiste = treinos[treinoSelecionado].some(ex => ex.id === exercicioSelecionado.id);
+  if (jaExiste) {
+    alert('Este exercício já foi adicionado a esse treino!');
+    return;
+  }
+
+  const novoExercicio = {
+    id: exercicioSelecionado.id,
+    nome: exercicioSelecionado.translations?.find(t => t.language === 2)?.name || exercicioSelecionado.name,
+    imagem: exercicioSelecionado.images?.[0]?.image || "assets/sem-imagem.png"
+  };
+
+  treinos[treinoSelecionado].push(novoExercicio);
+
+  localStorage.setItem('meusTreinos', JSON.stringify(treinos));
+
+  alert('Exercício adicionado com sucesso!');
+
+  const modal = bootstrap.Modal.getInstance(document.getElementById('modalTreino'));
+  modal.hide();
+}
