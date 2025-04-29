@@ -144,3 +144,76 @@ button.fav-btn:hover {
   background-color: #ffc107; /* Amarelo */
   color: #eee; /* Texto escuro para contraste */
 }
+
+/* Container da animação */
+.no-favorites-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  min-height: 300px;
+}
+
+/* Animação do haltere */
+.dumbbell-spinner {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  margin: 2rem auto;
+}
+
+.dumbbell {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  animation: rotate 2s linear infinite;
+}
+
+.dumbbell-bar {
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  background-color: #f05a28;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 10px;
+}
+
+.dumbbell-weight {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.dumbbell-weight.left {
+  left: 0;
+}
+
+.dumbbell-weight.right {
+  right: 0;
+}
+
+/* Texto */
+.no-favorites-text {
+  color: #666;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.no-favorites-subtext {
+  color: #999;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* Animação de rotação */
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
