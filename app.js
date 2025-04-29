@@ -189,7 +189,7 @@ function createCard(exercise, imageUrl) {
           exercise.category.name
         )}</span>
         <img 
-          class="card-img-top h-[150px] w-[250px] object-cover object-center"
+          class="card-img-top h-[150px] w-100 object-cover object-center"
           src="${imageUrl || "assets/sem-imagem.png"}"
           onerror="this.src='assets/sem-imagem.png'"
           alt="${translateCategory(exercise.category.name)}"

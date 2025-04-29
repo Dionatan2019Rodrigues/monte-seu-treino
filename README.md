@@ -5,7 +5,7 @@
 Navegando através da raiz deste repositório pelo seguinte caminho (./images) você encontra o print da paǵina inteira do site tanto na versão desktop  como na versão mobile também.
 
 #### Acesso
-[api.monte-seu-treino.com](https://elc1090.github.io/project2-2025a-dionatan-leonardo/)
+[api.monte-seu-treino.com](https://dionatan2019rodrigues.github.io/monte-seu-treino/)
 
 #### Desenvolvedores
 Dionatan Eduardo Correa Rodrigues - Ciência da Computação<br>
@@ -26,6 +26,7 @@ O processo de desenvolvimento priorizou a criação de uma solução robusta e f
 - **HTML**: Estruturação do site.
 - **CSS**: Estilizações expecíficas do projeto.
 - **Bootstrap**: Utilizado para uso de classes estilisadas.
+- **Tailwind**: Utilizado para uso de classes  estilisadas mais expecíficas.
 - **Javascript**: Utilizado para fazer a requisição da API do Wger e as manipulações de eventos no sistema.
 - **FontAwesome**: Ícones estilizados e de fácil implementação.
 - **Git**: Utilizado no versionamento de todo projeto.
