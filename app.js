@@ -1,4 +1,4 @@
-// constantes da api e elementos da pagina
+// Constantes da API e elementos da página
 const API_BASE = "https://wger.de/api/v2";
 const container = document.getElementById("cards-container");
 const loading = document.getElementById("loading");
@@ -6,9 +6,8 @@ const paginacao = document.getElementById("paginacao");
 const paginaTexto = document.getElementById("pagina-atual");
 const searchForm = document.querySelector('form[role="search"]');
 const searchInput = document.querySelector('input[type="search"]');
-document.getElementById('btnFavoritar').addEventListener('click', adicionarAoTreino);
 
-// controle de paginacao
+// Controle de paginação
 let paginaAtual = 1;
 const itensPorPagina = 12;
 let searchTerm = "";
@@ -16,7 +15,7 @@ let allExercisesCache = [];
 let exerciciosAtuais = [];
 let exercicioSelecionado = null;
 
-// mapeamento de categorias traduzidas
+// Mapeamento de categorias traduzidas
 const categoryMap = {
   abdominais: 10,
   bracos: 8,
@@ -46,27 +45,169 @@ function translateCategory(categoryName) {
 // Objeto para armazenar os filtros ativos
 let activeFilters = {};
 
-document.querySelectorAll(".form-check-input").forEach((checkbox) => {
-  checkbox.addEventListener("change", function () {
-    const filterId = this.id;
-    activeFilters[filterId] = this.checked;
+// Inicialização dos eventos
+function initEvents() {
+  // Filtros por categoria
+  document.querySelectorAll(".form-check-input").forEach((checkbox) => {
+    checkbox.addEventListener("change", function () {
+      const filterId = this.id;
+      activeFilters[filterId] = this.checked;
+      paginaAtual = 1;
+      showCards();
+    });
+  });
+
+  // Busca
+  searchForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    searchTerm = searchInput.value.trim().toLowerCase();
     paginaAtual = 1;
+
+    if (searchTerm) {
+      loadAllExercises().then(() => showCards());
+    } else {
+      showCards();
+    }
+  });
+
+  // Paginação
+  document.getElementById("anterior").addEventListener("click", () => {
+    if (paginaAtual > 1) {
+      paginaAtual--;
+      showCards();
+    }
+  });
+
+  document.getElementById("proximo").addEventListener("click", () => {
+    paginaAtual++;
     showCards();
   });
-});
 
-searchForm.addEventListener("submit", function (e) {
-  e.preventDefault();
-  searchTerm = searchInput.value.trim().toLowerCase();
-  paginaAtual = 1;
+  // Modal de favoritos
+  document
+    .getElementById("confirmarFavorito")
+    .addEventListener("click", adicionarAoTreino);
 
-  if (searchTerm) {
-    loadAllExercises().then(() => showCards());
-  } else {
-    showCards();
+  // Event delegation para botões de favoritar
+  document.addEventListener("click", function (e) {
+    const btnFavoritar = e.target.closest(".btn-favoritar");
+    if (btnFavoritar) {
+      const exerciseId = parseInt(
+        btnFavoritar.getAttribute("data-exercise-id")
+      );
+      favoritarModal(exerciseId);
+    }
+  });
+
+  // Limpeza do modal quando fechado
+  const modalTreino = document.getElementById("modalTreino");
+  if (modalTreino) {
+    modalTreino.addEventListener("hidden.bs.modal", function () {
+      document.getElementById("treinoSelect").value = "";
+      exercicioSelecionado = null;
+    });
   }
-});
+}
 
+// Função para favoritar exercício (abre o modal)
+function favoritarModal(id) {
+  exercicioSelecionado = exerciciosAtuais.find((ex) => ex.id === id);
+
+  if (!exercicioSelecionado) {
+    console.error("Exercício não encontrado!");
+    return;
+  }
+
+  const modal = new bootstrap.Modal(document.getElementById("modalTreino"));
+  modal.show();
+}
+
+// Função para adicionar exercício aos favoritos
+function adicionarAoTreino() {
+  if (!exercicioSelecionado || !exercicioSelecionado.id) {
+    console.error("Nenhum exercício selecionado para favoritar");
+    return;
+  }
+
+  const select = document.getElementById("treinoSelect");
+  const treinoSelecionado = select.value;
+
+  if (!treinoSelecionado) {
+    alert("Por favor, selecione um treino!");
+    return;
+  }
+
+  try {
+    let treinos = JSON.parse(localStorage.getItem("meusTreinos")) || {};
+
+    if (!treinos[treinoSelecionado]) {
+      treinos[treinoSelecionado] = [];
+    }
+
+    const exercicioJaExiste = treinos[treinoSelecionado].some(
+      (ex) => ex.id === exercicioSelecionado.id
+    );
+
+    if (exercicioJaExiste) {
+      alert("Este exercício já está neste treino!");
+    } else {
+      const novoExercicio = {
+        id: exercicioSelecionado.id,
+        nome:
+          exercicioSelecionado.translations?.find((t) => t.language === 2)
+            ?.name || exercicioSelecionado.name,
+        imagem:
+          exercicioSelecionado.images?.[0]?.image || "assets/sem-imagem.png",
+      };
+
+      treinos[treinoSelecionado].push(novoExercicio);
+      localStorage.setItem("meusTreinos", JSON.stringify(treinos));
+      alert("Exercício adicionado com sucesso!");
+    }
+  } catch (error) {
+    console.error("Erro ao salvar exercício:", error);
+    alert("Ocorreu um erro ao salvar o exercício.");
+  } finally {
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById("modalTreino")
+    );
+    if (modal) {
+      modal.hide();
+    }
+  }
+}
+
+// Função para criar cards de exercícios
+function createCard(exercise, imageUrl) {
+  const translation =
+    exercise.translations?.find((t) => t.language === 2) || {};
+  const card = document.createElement("div");
+  card.className = "col";
+  card.innerHTML = `
+    <div class="card h-100">
+      <div class="card-body">
+        <span class="badge bg-dark mb-2 p-2">${translateCategory(
+          exercise.category.name
+        )}</span>
+        <img 
+          class="card-img-top h-[150px] w-[250px] object-cover object-center"
+          src="${imageUrl || "assets/sem-imagem.png"}"
+          onerror="this.src='assets/sem-imagem.png'"
+          alt="${translateCategory(exercise.category.name)}"
+        >
+        <h5 class="card-title pt-3 mb-1">${translation.name || "Sem nome."}</h5>
+        <button class="btn btn-success px-6 w-100 btn-favoritar" type="button" data-exercise-id="${
+          exercise.id
+        }">
+          <i class="fa-regular fa-star"></i>
+        </button>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+// Função para carregar todos os exercícios
 async function loadAllExercises() {
   loading.style.display = "block";
   container.innerHTML = "";
@@ -87,9 +228,12 @@ async function loadAllExercises() {
   } catch (error) {
     console.error("Erro ao carregar todos os exercícios:", error);
     return [];
+  } finally {
+    loading.style.display = "none";
   }
 }
 
+// Função para buscar exercícios
 async function fetchExercises() {
   const offset = (paginaAtual - 1) * itensPorPagina;
   let url = `${API_BASE}/exerciseinfo/?language=7&limit=${itensPorPagina}&offset=${offset}`;
@@ -116,12 +260,14 @@ async function fetchExercises() {
   return data.results;
 }
 
+// Função para buscar imagens dos exercícios
 async function fetchExerciseImages() {
   const res = await fetch(`${API_BASE}/exerciseimage/?limit=200`);
   const data = await res.json();
   return data.results;
 }
 
+// Função para filtrar exercícios por nome
 function filterExercisesByName(exercises, searchTerm) {
   if (!searchTerm) return exercises;
 
@@ -133,6 +279,7 @@ function filterExercisesByName(exercises, searchTerm) {
   });
 }
 
+// Função para aplicar filtros de categoria
 function applyCategoryFilters(exercises) {
   const activeCategoryIds = Object.entries(activeFilters)
     .filter(([_, isActive]) => isActive)
@@ -145,40 +292,7 @@ function applyCategoryFilters(exercises) {
   );
 }
 
-function createCard(exercise, imageUrl) {
-  const translation =
-    exercise.translations?.find((t) => t.language === 2) || {};
-  return `
-    <div class="col">
-      <div class="card h-100">
-        <div class="card-body">
-          <span class="badge bg-dark mb-2 p-2">${translateCategory(
-            exercise.category.name
-          )}</span>
-          <img 
-            class="card-img-top h-[150px] w-[250px] object-cover object-center"
-            src="${imageUrl || "assets/sem-imagem.png"}"
-            onerror="this.src='assets/sem-imagem.png'"
-            alt="${translateCategory(exercise.category.name)}"
-          >
-          <h5 class="card-title pt-3 mb-1">${
-            translation.name || "Sem nome."
-          }</h5>
-          <button 
-            class="btn btn-success px-6 w-100" 
-            type="button" 
-            data-bs-toggle="modal" 
-            data-bs-target="#modalTreino"
-            onclick="favoritarModal(${exercise.id})"
-          >
-            <i class="fa-regular fa-star"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-  `;
-}
-
+// Função principal para exibir os cards
 async function showCards() {
   loading.style.display = "block";
   container.innerHTML = "";
@@ -201,9 +315,10 @@ async function showCards() {
       container.innerHTML =
         '<div class="col-12"><p class="text-center">Nenhum exercício encontrado com os critérios selecionados.</p></div>';
     } else {
+      container.innerHTML = "";
       exercisesToShow.forEach((exercise) => {
         const image = images.find((img) => img.exercise === exercise.id);
-        container.innerHTML += createCard(exercise, image?.image);
+        container.appendChild(createCard(exercise, image?.image));
       });
     }
 
@@ -218,79 +333,8 @@ async function showCards() {
   }
 }
 
-document.getElementById("anterior").addEventListener("click", () => {
-  if (paginaAtual > 1) {
-    paginaAtual--;
-    showCards();
-  }
-});
-
-document.getElementById("proximo").addEventListener("click", () => {
-  paginaAtual++;
+// Inicialização da aplicação
+document.addEventListener("DOMContentLoaded", function () {
+  initEvents();
   showCards();
 });
-
-showCards();
-
-// Funções de Favoritar
-function favoritarModal(id) {
-  exercicioSelecionado = exerciciosAtuais.find((ex) => ex.id === id);
-  
-  if (!exercicioSelecionado) {
-    console.error("Exercício não encontrado!");
-    return;
-  }
-  
-  const modal = new bootstrap.Modal(document.getElementById("modalTreino"));
-  modal.show();
-}
-
-function adicionarAoTreino() {
-  if (!exercicioSelecionado) {
-    alert("Nenhum exercício selecionado!");
-    return;
-  }
-
-  const select = document.getElementById("treinoSelect");
-  const treinoSelecionado = select.value;
-
-  if (!treinoSelecionado) {
-    alert("Selecione um treino!");
-    return;
-  }
-
-  let treinos = localStorage.getItem("meusTreinos");
-  treinos = treinos ? JSON.parse(treinos) : {};
-
-  if (!treinos[treinoSelecionado]) {
-    treinos[treinoSelecionado] = [];
-  }
-
-  const jaExiste = treinos[treinoSelecionado].some(
-    (ex) => ex.id === exercicioSelecionado.id
-  );
-  
-  if (jaExiste) {
-    alert("Este exercício já foi adicionado a esse treino!");
-  } else {
-    const novoExercicio = {
-      id: exercicioSelecionado.id,
-      nome:
-        exercicioSelecionado.translations?.find((t) => t.language === 2)?.name ||
-        exercicioSelecionado.name,
-      imagem: exercicioSelecionado.images?.[0]?.image || "assets/sem-imagem.png",
-    };
-
-    treinos[treinoSelecionado].push(novoExercicio);
-    localStorage.setItem("meusTreinos", JSON.stringify(treinos));
-    alert("Exercício adicionado com sucesso!");
-  }
-
-  // Fecha o modal corretamente
-  const modal = bootstrap.Modal.getInstance(document.getElementById('modalTreino'));
-  modal.hide();
-  
-  // Limpa a seleção
-  select.value = "";
-  exercicioSelecionado = null;
-}
