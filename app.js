@@ -9,7 +9,7 @@ const searchInput = document.querySelector('input[type="search"]');
 
 // controle de paginacao
 let paginaAtual = 1;
-const itensPorPagina = 15;
+const itensPorPagina = 12;
 let searchTerm = '';
 let allExercisesCache = [];
 let exerciciosAtuais = [];
