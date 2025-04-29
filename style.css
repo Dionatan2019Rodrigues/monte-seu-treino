@@ -115,3 +115,32 @@ button.fav-btn:hover {
     transform: rotate(360deg);
   }
 }
+
+/* Alertas customizados */
+.custom-alert {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  padding: 15px 25px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  transform: translateX(120%);
+  transition: transform 0.3s ease-in-out;
+  max-width: 300px;
+}
+
+.custom-alert.show {
+  transform: translateX(0);
+}
+
+.alert-success {
+  background-color: #28a745; /* Verde */
+}
+
+.alert-warning {
+  background-color: #ffc107; /* Amarelo */
+  color: #eee; /* Texto escuro para contraste */
+}

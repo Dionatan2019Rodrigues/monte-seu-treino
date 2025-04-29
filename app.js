@@ -122,7 +122,6 @@ function favoritarModal(id) {
   modal.show();
 }
 
-// Função para adicionar exercício aos favoritos
 function adicionarAoTreino() {
   if (!exercicioSelecionado || !exercicioSelecionado.id) {
     console.error("Nenhum exercício selecionado para favoritar");
@@ -133,7 +132,7 @@ function adicionarAoTreino() {
   const treinoSelecionado = select.value;
 
   if (!treinoSelecionado) {
-    alert("Por favor, selecione um treino!");
+    showCustomAlert("Por favor, selecione um treino!", "warning");
     return;
   }
 
@@ -149,7 +148,7 @@ function adicionarAoTreino() {
     );
 
     if (exercicioJaExiste) {
-      alert("Este exercício já está neste treino!");
+      showCustomAlert("Este exercício já está neste treino!", "warning");
     } else {
       const novoExercicio = {
         id: exercicioSelecionado.id,
@@ -162,11 +161,11 @@ function adicionarAoTreino() {
 
       treinos[treinoSelecionado].push(novoExercicio);
       localStorage.setItem("meusTreinos", JSON.stringify(treinos));
-      alert("Exercício adicionado com sucesso!");
+      showCustomAlert("Exercício adicionado com sucesso!", "success");
     }
   } catch (error) {
     console.error("Erro ao salvar exercício:", error);
-    alert("Ocorreu um erro ao salvar o exercício.");
+    showCustomAlert("Ocorreu um erro ao salvar o exercício.", "warning");
   } finally {
     const modal = bootstrap.Modal.getInstance(
       document.getElementById("modalTreino")
@@ -338,3 +337,29 @@ document.addEventListener("DOMContentLoaded", function () {
   initEvents();
   showCards();
 });
+
+// Função para mostrar alertas customizados
+function showCustomAlert(message, type = "success") {
+  // Remove alertas anteriores
+  const oldAlert = document.querySelector(".custom-alert");
+  if (oldAlert) oldAlert.remove();
+
+  // Cria o novo alerta
+  const alert = document.createElement("div");
+  alert.className = `custom-alert alert-${type}`;
+  alert.textContent = message;
+
+  document.body.appendChild(alert);
+
+  // Força o reflow para ativar a transição
+  void alert.offsetWidth;
+
+  // Mostra o alerta
+  alert.classList.add("show");
+
+  // Remove após 3 segundos
+  setTimeout(() => {
+    alert.classList.remove("show");
+    setTimeout(() => alert.remove(), 300);
+  }, 3000);
+}
